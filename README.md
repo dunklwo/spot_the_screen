@@ -1,0 +1,5 @@
+Classic CV/signal-processing approach (no deep net): extract ~30 features per image — multi-patch native-resolution FFT for moiré/pixel-grid detection, R/G/B channel-correlation for color fringing, sharpness texture, color clipping/saturation, glare-blob detection, border/bezel edges, and contrast-normalized noise statistics — then classify with a RandomForest (500 trees). 
+
+Accuracy: 85% 5-fold cross-validated on 171 self-collected photos (89 real, 82 screen). This is below the 95% target and I want to report that honestly rather than overstate it. The main failure modes are (a) very sharp real macro/close-up photos misread as "too clean to be real," and (b) full-frame screen photos with no visible bezel showing photo-like content, where the moiré signal is weak.
+
+With more time I'd prioritize: (1) broadening training data to cover more screen content types — my screens were all photos-of-photos; testing on screens showing text/code revealed the model has never learned that category and fails there, (2) more data overall (170 photos is small for this feature count), (3) explicit sub-pixel-grid template matching instead of only frequency-band summaries.
